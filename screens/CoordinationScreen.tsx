@@ -1,28 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   ImageBackground,
   ViewStyle,
   TouchableOpacity,
-  Image,
   ActivityIndicator,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Item from "../components/Item";
+import {
+  setTopsLoading,
+  setModelLoading,
+  setPantsLoading,
+  setOuterLoading,
+} from "../stores/loading";
 
 const CoordinationScreen: React.FC = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const tops = useSelector((state: any) => state.tops);
   const pants = useSelector((state: any) => state.pants);
   const outer = useSelector((state: any) => state.outer);
-  const [loaded, setLoaded] = useState({
-    tops: false,
-    pants: false,
-    outer: false,
-    person: false,
-  });
+  const loading = useSelector((state: any) => state.loading);
   const [tuckIn, setTuckIn] = useState({
     check: false,
     display: "OFF",
@@ -31,7 +32,10 @@ const CoordinationScreen: React.FC = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {loaded.tops && loaded.pants && loaded.outer && loaded.person ? (
+      {(loading.tops || tops.image === "") &&
+      (loading.pants || pants.image === "") &&
+      (loading.outer || outer.image === "") &&
+      loading.model ? (
         <></>
       ) : (
         <View
@@ -60,16 +64,10 @@ const CoordinationScreen: React.FC = () => {
       >
         <TouchableOpacity onPress={() => navigation.navigate("Tops")}>
           <ImageBackground
-            source={tops.image}
+            source={tops.image != "" ? tops.image : {}}
             style={menuStyle}
             onLoadEnd={() => {
-              setLoaded({
-                tops: true,
-                pants: loaded.pants,
-                outer: loaded.outer,
-                person: loaded.person,
-              });
-              console.log("tops ok");
+              dispatch(setTopsLoading(""));
             }}
           >
             <View
@@ -88,16 +86,10 @@ const CoordinationScreen: React.FC = () => {
 
         <TouchableOpacity onPress={() => navigation.navigate("Pants")}>
           <ImageBackground
-            source={pants.image}
+            source={pants.image != "" ? pants.image : {}}
             style={menuStyle}
             onLoadEnd={() => {
-              setLoaded({
-                tops: loaded.tops,
-                pants: true,
-                outer: loaded.outer,
-                person: loaded.person,
-              });
-              console.log("pants ok");
+              dispatch(setPantsLoading(""));
             }}
           >
             <View
@@ -115,16 +107,10 @@ const CoordinationScreen: React.FC = () => {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Outer")}>
           <ImageBackground
-            source={outer.image}
+            source={outer.image != "" ? outer.image : {}}
             style={menuStyle}
             onLoadEnd={() => {
-              setLoaded({
-                tops: loaded.tops,
-                pants: loaded.pants,
-                outer: true,
-                person: loaded.person,
-              });
-              console.log("outer ok");
+              dispatch(setOuterLoading(""));
             }}
           >
             <View
@@ -188,25 +174,19 @@ const CoordinationScreen: React.FC = () => {
         source={require("../assets/test_model.png")}
         style={{ flex: 9, zIndex: 0 }}
         onLoadEnd={() => {
-          setLoaded({
-            tops: loaded.tops,
-            pants: loaded.pants,
-            outer: loaded.outer,
-            person: true,
-          });
-          console.log("person ok");
+          dispatch(setModelLoading(""));
         }}
       >
         {pants ? (
           <View style={{ zIndex: tuckIn.zIndex }}>
-            <Item source={pants.image} width={270} />
+            <Item source={pants.image} width={220} />
           </View>
         ) : (
           <></>
         )}
         {tops ? (
           <View style={{ zIndex: 1 }}>
-            <Item source={tops.image} width={220} />
+            <Item source={tops.image} width={180} />
           </View>
         ) : (
           <></>

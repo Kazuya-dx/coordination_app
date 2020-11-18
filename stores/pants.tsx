@@ -8,9 +8,9 @@ interface Item {
 
 // Stateの初期状態
 const initialState: Item = {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-  name: "WASHED DENIM BI-COLOR PANTS",
-  image: require("../assets/test_pants.png"),
+  id: "",
+  name: "",
+  image: "",
 };
 
 // Sliceを生成する

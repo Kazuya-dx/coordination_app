@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { setOuter } from "../stores/outer";
+import { clearOuterLoading } from "../stores/loading";
 import { useNavigation } from "@react-navigation/native";
 
 const DATA = [
@@ -18,13 +19,13 @@ const DATA = [
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
     name: "1BUTTON SINGLE JACKET (1B008-0120-15)",
     image: require("../assets/test_jacket.png"),
-    width: 210,
+    width: 180,
   },
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
     name: "WAIST GATHERED COAT (1B003-0220-03)",
     image: require("../assets/test_jacket2.png"),
-    width: 350,
+    width: 280,
   },
 ];
 
@@ -36,6 +37,7 @@ const Item = ({ item }: any) => {
     <TouchableOpacity
       style={styles.item}
       onPress={() => {
+        dispatch(clearOuterLoading(""));
         dispatch(
           setOuter({
             id: item.id,

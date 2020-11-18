@@ -9,9 +9,9 @@ interface Item {
 
 // Stateの初期状態
 const initialState: Item = {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-  name: "1BUTTON SINGLE JACKET (1B008-0120-15)",
-  image: require("../assets/test_jacket.png"),
+  id: "",
+  name: "",
+  image: "",
   width: 210,
 };
 

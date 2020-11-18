@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { setTops } from "../stores/tops";
+import { clearTopsLoading } from "../stores/loading";
 import { useNavigation } from "@react-navigation/native";
 
 const DATA = [
@@ -34,6 +35,7 @@ const Item = ({ item }: any) => {
     <TouchableOpacity
       style={styles.item}
       onPress={() => {
+        dispatch(clearTopsLoading(""));
         dispatch(setTops({ id: item.id, name: item.name, image: item.image }));
         navigation.navigate("Coordination");
       }}

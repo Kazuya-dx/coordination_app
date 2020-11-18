@@ -8,9 +8,9 @@ interface Item {
 
 // Stateの初期状態
 const initialState: Item = {
-  id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-  name: "VELVET TURTLE NECK TOP",
-  image: require("../assets/test_tops.png"),
+  id: "",
+  name: "",
+  image: "",
 };
 
 // Sliceを生成する

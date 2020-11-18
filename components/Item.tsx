@@ -20,44 +20,48 @@ const Item: React.FC<Props> = (props) => {
     }
   });
 
-  return (
-    <View
-      onStartShouldSetResponder={(e) => true}
-      onResponderMove={(e) => {
-        let x = e.nativeEvent.pageY - 280;
-        let y = e.nativeEvent.pageX - 120;
-        setPos({ x: x, y: y });
-      }}
-      onTouchStart={() => {
-        // ダブルタップ処理
-        const now = new Date().getTime();
-        if (now - lastPress <= 250) {
-          console.log("DOUBLE TAP");
-        }
-        setLastPress(now);
-
-        // onMoveの処理
-        setOnMove(true);
-      }}
-      onTouchEnd={() => {
-        setOnMove(false);
-      }}
-    >
-      <Image
-        style={{
-          position: "absolute",
-          top: pos.x,
-          left: pos.y,
-          height: props.width,
-          width: props.width,
-          resizeMode: "contain",
-          borderWidth: border,
-          borderColor: "#a1b",
+  if (props.source != "") {
+    return (
+      <View
+        onStartShouldSetResponder={(e) => true}
+        onResponderMove={(e) => {
+          let x = e.nativeEvent.pageY - 280;
+          let y = e.nativeEvent.pageX - 120;
+          setPos({ x: x, y: y });
         }}
-        source={props.source}
-      />
-    </View>
-  );
+        onTouchStart={() => {
+          // ダブルタップ処理
+          const now = new Date().getTime();
+          if (now - lastPress <= 250) {
+            console.log("DOUBLE TAP");
+          }
+          setLastPress(now);
+
+          // onMoveの処理
+          setOnMove(true);
+        }}
+        onTouchEnd={() => {
+          setOnMove(false);
+        }}
+      >
+        <Image
+          style={{
+            position: "absolute",
+            top: pos.x,
+            left: pos.y,
+            height: props.width,
+            width: props.width,
+            resizeMode: "contain",
+            borderWidth: border,
+            borderColor: "#a1b",
+          }}
+          source={props.source}
+        />
+      </View>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default Item;
